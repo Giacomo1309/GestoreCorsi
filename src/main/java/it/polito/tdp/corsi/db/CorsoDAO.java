@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import it.polito.tdp.corsi.model.Corso;
+import it.polito.tdp.corsi.model.Studente;
 
 public class CorsoDAO {
 	
@@ -66,6 +67,35 @@ public class CorsoDAO {
 		
 		return result;
 	}
+
+	public Map<Studente, String> getIscrittiByCodiceCorso(String codice) {
+		String sql = "SELECT i.codins, s.matricola , s.cognome , s.nome , s.CDS " +
+				" FROM iscrizione AS i, studente AS s" +
+				" WHERE i.matricola=s.matricola AND i.codins = ? "+
+				" GROUP BY i.codins, s.matricola , s.cognome , s.nome , s.CDS " ;
+		Map<Studente, String> result = new HashMap<Studente,String>();
+		
+		try {
+			Connection conn = ConnectDB.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.setString(1, codice);
+			ResultSet rs = st.executeQuery();
+			
+			while(rs.next()) {
+				Studente s = new Studente(rs.getInt("matricola"), rs.getString("nome"), rs.getString("cognome"), rs.getString("CDS"));
+				
+				result.put(s, ""+s.getMatricola());
+			}
+			
+			conn.close();
+			
+		} catch(SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+		return result;
+	}
+	
 	
 
 }

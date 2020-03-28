@@ -21,4 +21,7 @@ public class Model {
 	public Map<Corso,Integer> getIscrittiByPeriodo(Integer pd){
 		return dao.getIscrittiByPeriodo(pd);
 	}
+	public Map<Studente,String> getIscrittiByCodiceCorso(String codice){
+		return dao.getIscrittiByCodiceCorso(codice);
+	}
 }

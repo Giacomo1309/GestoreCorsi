@@ -8,6 +8,8 @@ public class TestModel {
 		
 		System.out.println(model.getIscrittiByPeriodo(2));
 		
+		System.out.println(model.getIscrittiByCodiceCorso("01NATPG")) ;
+		
 
 	}
 
